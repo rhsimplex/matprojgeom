@@ -32,10 +32,14 @@ def csvbuilder(target_dir, output, column_functions):
 
 #list of column functions you might want. Of course you can use any function that accepts a Structure object and returns a single value
 def formula(a):
-    return a.formula
+    c = a.composition
+    return c.alphabetical_formula
 
 def numberOfSpecies(a):
     return len(a.composition)
+
+def density(a):
+    return a.density
 
 def fracTransitionMetal(a):
     c = a.composition
@@ -80,3 +84,36 @@ def fracActinoid(a):
 def electronsPerAtom(a):
     c = a.composition
     return sum(map(mul, map(c.get_atomic_fraction, c.elements),[x.common_oxidation_states[0] for x in c.elements]))
+
+def electronegativityRange(a):
+    return np.ptp([x.X for x in a.species])
+
+def electronegativityStd(a):
+    return np.std([x.X for x in a.species])
+
+def radiiRange(a):
+    return np.ptp([x.atomic_radius for x in a.species])
+
+def radiiStd(a):
+    return np.std([x.atomic_radius for x in a.species])
+
+def rowRange(a):
+    return np.ptp([x.row for x in a.species])
+
+def rowStd(a):
+    return np.std([x.row for x in a.species])
+
+def ordered(a):
+    return a.is_ordered
+
+##the following are things we might want to predict/use in training
+def crystalSystem(a):
+    sf = pm.symmetry.finder.SymmetryFinder(a)
+    return sf.get_crystal_system
+
+def spaceGroup(a):
+    sf = pm.symmetry.finder.SymmetryFinder(a)
+    return sf.get_spacegroup_symbol()
+
+def volumePerSite(a):
+    return a.volume/a.num_sites
