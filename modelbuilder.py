@@ -62,3 +62,30 @@ def buildTreeRegressor(predictorColumns, structurestable = 'structures.csv',  ta
     rfr.fit(X, y)
 
     return rfr, t, acc
+
+def buildCoordinationTreeRegressor(predictorColumns, element, coordinationDir = 'coordination/', md = None):
+    """
+    Build a coordination predictor for a given element from compositional structure data of structures containing that element. Will return a model trained on all data, a mean_absolute_error score, and a table of true vs. predicted values
+    """
+    df = pd.read_csv(coordinationDir + element + '.csv')
+    df = df.dropna()
+    if('fracNobleGas' in df.columns):
+        df = df[df['fracNobleGas'] <= 0]
+    
+    s = StandardScaler()
+    
+    X = s.fit_transform(df[predictorColumns])
+    y = df['avgCoordination'].values
+
+    rfr = RandomForestRegressor(max_depth = md)
+    acc = mean(cross_val_score(rfr, X, y, scoring=make_scorer(mean_absolute_error)))
+
+    X_train, X_test, y_train, y_test = train_test_split(X,y)
+    rfr.fit(X_train,y_train)
+    y_predict = rfr.predict(X_test)
+    
+    t = pd.DataFrame({'True':y_test, 'Predicted':y_predict})
+    
+    rfr.fit(X, y)
+
+    return rfr, t, acc
