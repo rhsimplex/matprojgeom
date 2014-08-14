@@ -34,7 +34,7 @@ def buildTreeClassifier(predictorColumns, structurestable = 'structures.csv',  t
 
     rfc.fit(X, y)
 
-    return rfc, cm, acc, le
+    return rfc, cm, round(acc,2), le
 
 def buildTreeRegressor(predictorColumns, structurestable = 'structures.csv',  targetcolumn = 'c_a', md = None):
     """
@@ -61,17 +61,24 @@ def buildTreeRegressor(predictorColumns, structurestable = 'structures.csv',  ta
     
     rfr.fit(X, y)
 
-    return rfr, t, acc
+    return rfr, t, round(acc,2)
 
 def buildCoordinationTreeRegressor(predictorColumns, element, coordinationDir = 'coordination/', md = None):
     """
     Build a coordination predictor for a given element from compositional structure data of structures containing that element. Will return a model trained on all data, a mean_absolute_error score, and a table of true vs. predicted values
     """
-    df = pd.read_csv(coordinationDir + element + '.csv')
+    try:
+        df = pd.read_csv(coordinationDir + element + '.csv')
+    except Exception:
+        print 'No data for ' + element
+        return None, None, None
     df = df.dropna()
     if('fracNobleGas' in df.columns):
         df = df[df['fracNobleGas'] <= 0]
     
+    if(len(df) < 4):
+        print 'Not enough data for ' + element
+        return None, None, None
     s = StandardScaler()
     
     X = s.fit_transform(df[predictorColumns])
@@ -88,4 +95,4 @@ def buildCoordinationTreeRegressor(predictorColumns, element, coordinationDir = 
     
     rfr.fit(X, y)
 
-    return rfr, t, acc
+    return rfr, t, round(acc,2)
