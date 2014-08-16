@@ -21,13 +21,13 @@ def csvbuilder(target_dir, output, column_functions, nary=10):
         for structure_filename in structure_files:
             a = pm.read_structure(os.path.join(target_dir, structure_filename))
             if next_row > 0 and numberOfSpecies(a) < nary: 
-                row = [f(a) for f in column_functions]
+                row = [structure_filename] + [f(a) for f in column_functions]
                 structurewriter.writerow(row)
                 next_row += 1
             elif numberOfSpecies(a) < nary:
-                colnames = [f.func_name for f in column_functions]
+                colnames = ['fileNames'] + [f.func_name for f in column_functions]
                 structurewriter.writerow(colnames)
-                row = [f(a) for f in column_functions]
+                row = [structure_filename] + [f(a) for f in column_functions]
                 structurewriter.writerow(row)
                 next_row += 2
 
@@ -184,3 +184,6 @@ def density(a):
 
 def c_a(a):
     return round(a.lattice.a/a.lattice.c,4)
+
+def avgCoordination(a):
+    return np.mean(a.site_properties['coordination_no'])
