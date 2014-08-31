@@ -19,7 +19,7 @@ def buildTreeClassifier(predictorColumns, structurestable = 'structures.csv',  t
     s = StandardScaler()
     le = LabelEncoder()
     
-    X = s.fit_transform(df[predictorColumns])
+    X = s.fit_transform(df[predictorColumns].astype('float64'))
     y = le.fit_transform(df[targetcolumn].values)
 
     rfc = RandomForestClassifier(max_depth = md)

@@ -30,6 +30,18 @@ def build_predictors(structure_csv='structures.csv'):
 
     return rfc, le, rfr_volume, rfr_c_a
 
+def build_coordination_predictor(element, structure_csv='structures.csv'):
+    column_headers = pd.read_csv(structure_csv).columns
+
+    predictor_names = column_headers[1:19]
+    target_coordination = column_headers[-1]
+    
+    print 'Building coordination regressor\nfor ' + element + '...',
+    sys.stdout.flush()
+    rfr, _, mae = modelbuilder.buildCoordinationTreeRegressor(predictor_names, element)
+    print 'done. MAE: ' + str(mae)
+    return rfr, mae
+    
 def predictable_row(a, structure_csv='structures.csv'):
     column_headers = pd.read_csv(structure_csv).columns
     predictor_names = column_headers[1:20]
@@ -37,7 +49,7 @@ def predictable_row(a, structure_csv='structures.csv'):
     for header in predictor_names:
         row.append(eval('databasegenerator.' + header + '(a)'))
     print '=====Compositional Features====='
-    print pd.Series(row, index = predictor_names)
+    print pd.DataFrame(row, index = predictor_names, columns=['Value'])
     return row
 
 def main():
@@ -77,19 +89,27 @@ def main():
         try:
             a = pm.Structure(lattice, el_list, coords)
             row = predictable_row(a)
-            print '=====Structure Predictions====='
+            print '=====Structure Predictions======'
+            coord_regs = {}
+            for element in set(el_list):
+                coord_regs[element] = build_coordination_predictor(element)
+            print '--------------------------------'
             probs = rfc.predict_proba(row)
             pg_names = map(le.inverse_transform, range(len(probs[0])))
             sgs = pd.Series(probs[0], index = pg_names)
             sgs.sort(ascending=False)
             sgs = pd.DataFrame(sgs)
-            sgs.index.name = 'Point Group'
+            sgs.index.name = 'Cryst. Point Group'
             sgs.columns = ['Probability']
             print sgs[:5]
+            print '--------------------------------'
             print 'Volume/site: ' + str(round(rfr_volume.predict(row) ,2)) + ' A^3'
             print 'c/a: ' + str(round(rfr_c_a.predict(row), 2))
-            print '==============================='
+            for element in coord_regs.keys():
+                print 'Coordination ' + element + ': ' + str(round(coord_regs[element][0].predict(row[:-1])[0],2))
+            print '================================'
             
         except ValueError:
-            print 'Invalid formula.'
-         
+            print 'Invalid formula or no data for element.'
+        except AttributeError:
+            print 'Not enough data to predict (e.g. noble gas compound)'

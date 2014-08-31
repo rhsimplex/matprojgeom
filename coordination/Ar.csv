@@ -1,0 +1,2 @@
+formula,numberOfSpecies,fracActinoid,fracAlkali,fracAlkaline,fracChalcogen,fracHalogen,fracLanthanoid,fracMetalloid,fracNobleGas,fracRareEarth,fracTransitionMetal,electronsPerAtom,electronegativityRange,electronegativityStd,radiiRange,radiiStd,rowRange,rowStd,avgCoordination
+Ar1,1,0.0,0.0,0.0,1.0,0.0,0.0,0.0,1.0,0.0,0.0,-1000,0.0,0.0,0.0,0.0,0.0,0.0,12.0

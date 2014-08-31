@@ -1,0 +1,7 @@
+formula,numberOfSpecies,fracActinoid,fracAlkali,fracAlkaline,fracChalcogen,fracHalogen,fracLanthanoid,fracMetalloid,fracNobleGas,fracRareEarth,fracTransitionMetal,electronsPerAtom,electronegativityRange,electronegativityStd,radiiRange,radiiStd,rowRange,rowStd,avgCoordination
+As8 F64 Kr12,3,0.0,0.0,0.0,0.0,0.7619,0.0,0.0952,0.1429,0.0,0.0,-1000,1.8,0.5906,-1000,-1000,2.0,0.8518,4.0
+F28 Kr4 Sb4,3,0.0,0.0,0.0,0.0,0.7778,0.0,0.1111,0.1111,0.0,0.0,-1000,1.93,0.645,-1000,-1000,3.0,1.0657,4.0
+F2 Kr1,2,0.0,0.0,0.0,0.0,0.6667,0.0,0.0,0.3333,0.0,0.0,-1000,0.98,0.462,-1000,-1000,2.0,0.9428,4.0
+Bi4 F28 Kr4,3,0.0,0.0,0.0,0.0,0.7778,0.0,0.0,0.1111,0.0,0.0,-1000,1.96,0.6533,-1000,-1000,4.0,1.3333,4.0
+F22 Kr6 Sb2,3,0.0,0.0,0.0,0.0,0.7333,0.0,0.0667,0.2,0.0,0.0,-1000,1.93,0.5788,-1000,-1000,3.0,1.0198,4.0
+As4 F28 Kr4,3,0.0,0.0,0.0,0.0,0.7778,0.0,0.1111,0.1111,0.0,0.0,-1000,1.8,0.6093,-1000,-1000,2.0,0.8315,4.0
