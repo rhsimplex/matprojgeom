@@ -113,3 +113,6 @@ def main():
             print 'Invalid formula or no data for element.'
         except AttributeError:
             print 'Not enough data to predict (e.g. noble gas compound)'
+
+if __name__ == "__main__":
+    main()

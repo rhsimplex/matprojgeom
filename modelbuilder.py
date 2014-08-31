@@ -47,7 +47,7 @@ def buildTreeRegressor(predictorColumns, structurestable = 'structures.csv',  ta
     
     s = StandardScaler()
     
-    X = s.fit_transform(df[predictorColumns])
+    X = s.fit_transform(df[predictorColumns].astype('float64'))
     y = df[targetcolumn].values
 
     rfr = RandomForestRegressor(max_depth = md)
@@ -81,7 +81,7 @@ def buildCoordinationTreeRegressor(predictorColumns, element, coordinationDir = 
         return None, None, None
     s = StandardScaler()
     
-    X = s.fit_transform(df[predictorColumns])
+    X = s.fit_transform(df[predictorColumns].astype('float64'))
     y = df['avgCoordination'].values
 
     rfr = RandomForestRegressor(max_depth = md)
