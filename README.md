@@ -20,6 +20,8 @@ Building volume/site regressor... done. MAE: 1.84 A^3
 Building c/a regressor... done. MAE: 0.2
 Enter composition to predict, or 'q' to quit. Please include numbers for all elements (e.g. Li21Si5, Al2Ti1): 
 ```
+Accuracy is defined as the number of correct answers over all predections.  MAE is mean average error.
+
 Here you can input a composition, for instance: "Au5Cu7Mg2". You should see output like this:
 
 ```
