@@ -4,6 +4,7 @@ matprojgeom is a very simple crystal structure predictor. It uses some machine l
 
 To try it out, clone this repository and run predictor.py (you will need the pymatgen (https://pymatgen.org) library):
 ```
+$cd matprojgeom
 $python predictor.py
 ```
 or if using ipython:
