@@ -73,6 +73,7 @@ Coordination Cu: 9.05
 Values under the "Compositional Features" header are computed just from the formula, i.e elemental, data.  These will be fed into the random forest models to predict point symmetry, volume/site, c/a ratio, and coordination for each species.
 
 That's it! For a deeper explanation, and a look at performance, see: https://github.com/rhsimplex/matprojgeom/blob/master/matprojgeom.pdf?raw=true  
+
 ----------
 An explanation of some included files:
 
